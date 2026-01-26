@@ -1,11 +1,14 @@
 use axum::{
     Json, Router,
     body::Body,
-    extract::{Path, State},
+    extract::{Path, State, Request},
     http::{StatusCode, header},
-    response::{Html, IntoResponse, Response},
-    routing::get,
+    response::{Html, IntoResponse, Response, Redirect},
+    routing::{get, post},
+    middleware::{self, Next},
+    Form,
 };
+use axum_extra::extract::cookie::{CookieJar, Cookie, SameSite};
 use clap::Parser;
 use local_ip_address::local_ip;
 use std::{fs, net::{SocketAddr, IpAddr}, path::PathBuf, process, sync::Arc, error::Error};
@@ -14,10 +17,15 @@ use uuid::Uuid;
 use rcgen::{CertificateParams, DistinguishedName, KeyPair};
 use axum_server::tls_rustls::RustlsConfig;
 
+const AUTH_COOKIE_NAME: &str = "auth_token";
+
 #[derive(Parser)]
 struct Args {
     #[arg(long, required = true, num_args = 1..)]
     paths: Vec<PathBuf>,
+
+    #[arg(long, required = true)]
+    password: String,
 }
 
 #[derive(serde::Serialize, Clone)]
@@ -26,6 +34,18 @@ struct Files {
     file_name: String,
     file_size: u64,
     file_path: PathBuf,
+}
+
+#[derive(Clone)]
+struct AppState {
+    files: Vec<Files>,
+    password: String,
+    auth_token: String,
+}
+
+#[derive(serde::Deserialize)]
+struct LoginForm {
+    password: String,
 }
 
 #[tokio::main]
@@ -94,13 +114,31 @@ async fn main() -> Result<(), Box<dyn Error>> {
         key_pem.into_bytes()
     ).await?;
 
-    let shared_state = Arc::new(files);
+    let auth_token = Uuid::new_v4().to_string();
+
+    let shared_state = Arc::new(AppState {
+        files,
+        password: args.password,
+        auth_token,
+    });
+
     let addr = SocketAddr::new(local_ip, 8000);
-    let app = Router::new()
-        .route("/", get(Html(include_str!("../index.html"))))
+
+    let protected_routes = Router::new()
+        .route("/", get(index_page))
         .route("/metadata", get(get_metadata))
         .route("/download/{uuid}", get(download_file))
+        .layer(middleware::from_fn_with_state(shared_state.clone(), auth_middleware))
+        .with_state(shared_state.clone());
+
+    let public_routes = Router::new()
+        .route("/login", get(login_page))
+        .route("/login", post(handle_login))
         .with_state(shared_state);
+
+    let app = Router::new()
+        .merge(protected_routes)
+        .merge(public_routes);
 
     println!("Server running at https://{}", addr);
     println!("Press Ctrl+C to stop...");
@@ -112,15 +150,57 @@ async fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-async fn get_metadata(State(files): State<Arc<Vec<Files>>>) -> impl IntoResponse {
-    Json(files.as_ref().clone())
+async fn auth_middleware(
+    State(state): State<Arc<AppState>>,
+    jar: CookieJar,
+    request: Request,
+    next: Next,
+) -> Result<Response, Response> {
+    if let Some(cookie) = jar.get(AUTH_COOKIE_NAME) {
+        if cookie.value() == state.auth_token {
+            return Ok(next.run(request).await);
+        }
+    }
+
+    Err(Redirect::to("/login").into_response())
+}
+
+async fn login_page() -> Html<&'static str> {
+    Html(include_str!("../login.html"))
+}
+
+async fn handle_login(
+    State(state): State<Arc<AppState>>,
+    jar: CookieJar,
+    Form(form): Form<LoginForm>,
+) -> Response {
+    if form.password == state.password {
+        let cookie = Cookie::build((AUTH_COOKIE_NAME, state.auth_token.clone()))
+            .path("/")
+            .http_only(true)
+            .secure(true)
+            .same_site(SameSite::Strict)
+            .build();
+
+        (jar.add(cookie), Redirect::to("/")).into_response()
+    } else {
+        Redirect::to("/login?error=1").into_response()
+    }
+}
+
+async fn index_page() -> Html<&'static str> {
+    Html(include_str!("../index.html"))
+}
+
+async fn get_metadata(State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    Json(state.files.clone())
 }
 
 async fn download_file(
     Path(uuid): Path<Uuid>,
-    State(files): State<Arc<Vec<Files>>>,
+    State(state): State<Arc<AppState>>,
 ) -> impl IntoResponse {
-    let file_info = match files.iter().find(|f| f.uuid == uuid) {
+    let file_info = match state.files.iter().find(|f| f.uuid == uuid) {
         Some(f) => f,
         None => return Err((StatusCode::NOT_FOUND, "File not found")),
     };

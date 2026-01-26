@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - File Share</title>
+    <style>
+        :root {
+            --md-sys-color-primary: #006c4c;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #89f8c7;
+            --md-sys-color-on-primary-container: #002114;
+            --md-sys-color-secondary: #4c6358;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #cee9da;
+            --md-sys-color-background: #fbfdf9;
+            --md-sys-color-on-background: #191c1a;
+            --md-sys-color-surface: #fbfdf9;
+            --md-sys-color-surface-variant: #dbe5de;
+            --md-sys-color-on-surface-variant: #404944;
+            --md-sys-color-outline: #707974;
+
+            --md-sys-color-error: #ba1a1a;
+            --md-sys-color-on-error: #ffffff;
+            --md-sys-color-error-container: #ffdad6;
+            --md-sys-color-on-error-container: #410002;
+
+            --md-sys-typescale-headline-large: 400 32px/40px system-ui, -apple-system, sans-serif;
+            --md-sys-typescale-body-large: 400 16px/24px system-ui, -apple-system, sans-serif;
+            --md-sys-typescale-label-large: 500 14px/20px system-ui, -apple-system, sans-serif;
+
+            --md-sys-shape-corner-large: 16px;
+            --md-sys-shape-corner-full: 9999px;
+            --md-sys-shape-corner-small: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --md-sys-color-primary: #6ddbac;
+                --md-sys-color-on-primary: #003825;
+                --md-sys-color-primary-container: #005138;
+                --md-sys-color-on-primary-container: #89f8c7;
+                --md-sys-color-background: #191c1a;
+                --md-sys-color-on-background: #e1e3df;
+                --md-sys-color-surface: #191c1a;
+                --md-sys-color-surface-variant: #404944;
+                --md-sys-color-on-surface-variant: #bfc9c2;
+                --md-sys-color-outline: #8a938d;
+
+                --md-sys-color-error: #ffb4ab;
+                --md-sys-color-on-error: #690005;
+                --md-sys-color-error-container: #93000a;
+                --md-sys-color-on-error-container: #ffdad6;
+            }
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
+            padding: 48px 32px;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 360px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        h1 {
+            font: var(--md-sys-typescale-headline-large);
+            margin: 0;
+            text-align: center;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .error-msg {
+            background-color: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
+            padding: 12px 16px;
+            border-radius: var(--md-sys-shape-corner-small);
+            font: var(--md-sys-typescale-body-large);
+            font-size: 14px;
+            display: none;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        input[type="password"] {
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-background);
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: var(--md-sys-shape-corner-small);
+            padding: 16px;
+            font: var(--md-sys-typescale-body-large);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="password"]:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+        }
+
+        button {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            font: var(--md-sys-typescale-label-large);
+            font-size: 16px;
+            height: 48px;
+            border: none;
+            border-radius: var(--md-sys-shape-corner-full);
+            cursor: pointer;
+            transition: opacity 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            opacity: 0.9;
+            box-shadow: 0 2px 4px 1px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            opacity: 0.8;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <main class="login-card">
+        <h1>Authentication</h1>
+
+        <div id="error-banner" class="error-msg">
+            Incorrect password. Please try again.
+        </div>
+
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    required
+                    autofocus
+                    autocomplete="current-password"
+                >
+            </div>
+            <button type="submit">Sign In</button>
+        </form>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('error') === '1') {
+                const banner = document.getElementById('error-banner');
+                if (banner) {
+                    banner.style.display = 'block';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
