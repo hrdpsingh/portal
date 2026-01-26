@@ -3,184 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - File Share</title>
+    <title>Login</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z' fill='%237C3AED'/%3E%3Cpath d='M14 2V8H20L14 2Z' fill='%23A78BFA'/%3E%3Cpath d='M8 13H16M8 17H13' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
     <style>
         :root {
-            --md-sys-color-primary: #006c4c;
+            /* Material You (MD3) Color Tokens - Light Mode Default */
+            --md-sys-color-primary: #6750a4;
             --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #89f8c7;
-            --md-sys-color-on-primary-container: #002114;
-            --md-sys-color-secondary: #4c6358;
-            --md-sys-color-on-secondary: #ffffff;
-            --md-sys-color-secondary-container: #cee9da;
-            --md-sys-color-background: #fbfdf9;
-            --md-sys-color-on-background: #191c1a;
-            --md-sys-color-surface: #fbfdf9;
-            --md-sys-color-surface-variant: #dbe5de;
-            --md-sys-color-on-surface-variant: #404944;
-            --md-sys-color-outline: #707974;
+            --md-sys-color-primary-container: #eaddff;
+            --md-sys-color-on-primary-container: #21005d;
+            --md-sys-color-background: #fef7ff;
+            --md-sys-color-surface: #fef7ff;
+            --md-sys-color-surface-container: #f3edf7;
+            --md-sys-color-on-surface: #1d1b20;
+            --md-sys-color-outline: #79747e;
+            --md-sys-color-error: #b3261e;
 
-            --md-sys-color-error: #ba1a1a;
-            --md-sys-color-on-error: #ffffff;
-            --md-sys-color-error-container: #ffdad6;
-            --md-sys-color-on-error-container: #410002;
-
-            --md-sys-typescale-headline-large: 400 32px/40px system-ui, -apple-system, sans-serif;
-            --md-sys-typescale-body-large: 400 16px/24px system-ui, -apple-system, sans-serif;
-            --md-sys-typescale-label-large: 500 14px/20px system-ui, -apple-system, sans-serif;
-
-            --md-sys-shape-corner-large: 16px;
+            --md-sys-shape-corner-extra-large: 28px;
             --md-sys-shape-corner-full: 9999px;
-            --md-sys-shape-corner-small: 8px;
+            --md-sys-typescale-body-large-font: system-ui, -apple-system, sans-serif;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --md-sys-color-primary: #6ddbac;
-                --md-sys-color-on-primary: #003825;
-                --md-sys-color-primary-container: #005138;
-                --md-sys-color-on-primary-container: #89f8c7;
-                --md-sys-color-background: #191c1a;
-                --md-sys-color-on-background: #e1e3df;
-                --md-sys-color-surface: #191c1a;
-                --md-sys-color-surface-variant: #404944;
-                --md-sys-color-on-surface-variant: #bfc9c2;
-                --md-sys-color-outline: #8a938d;
-
-                --md-sys-color-error: #ffb4ab;
-                --md-sys-color-on-error: #690005;
-                --md-sys-color-error-container: #93000a;
-                --md-sys-color-on-error-container: #ffdad6;
+                /* Dark Mode Tokens */
+                --md-sys-color-primary: #d0bcff;
+                --md-sys-color-on-primary: #381e72;
+                --md-sys-color-primary-container: #4f378b;
+                --md-sys-color-on-primary-container: #eaddff;
+                --md-sys-color-background: #141218;
+                --md-sys-color-surface: #141218;
+                --md-sys-color-surface-container: #211f26;
+                --md-sys-color-on-surface: #e6e1e5;
+                --md-sys-color-outline: #938f99;
+                --md-sys-color-error: #f2b8b5;
             }
         }
 
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
+            padding: 0;
+            font-family: var(--md-sys-typescale-body-large-font);
             background-color: var(--md-sys-color-background);
-            color: var(--md-sys-color-on-background);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--md-sys-color-on-surface);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
         }
 
-        .login-card {
-            background-color: var(--md-sys-color-surface-variant);
-            color: var(--md-sys-color-on-surface-variant);
-            padding: 48px 32px;
-            border-radius: 28px;
+        .card {
+            background-color: var(--md-sys-color-surface-container);
+            padding: 40px;
+            border-radius: var(--md-sys-shape-corner-extra-large);
             width: 100%;
-            max-width: 360px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
+            max-width: 400px;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
 
         h1 {
-            font: var(--md-sys-typescale-headline-large);
-            margin: 0;
+            margin: 0 0 32px 0;
+            font-weight: 400;
+            font-size: 2rem;
             text-align: center;
-            color: var(--md-sys-color-on-surface-variant);
-        }
-
-        .error-msg {
-            background-color: var(--md-sys-color-error-container);
-            color: var(--md-sys-color-on-error-container);
-            padding: 12px 16px;
-            border-radius: var(--md-sys-shape-corner-small);
-            font: var(--md-sys-typescale-body-large);
-            font-size: 14px;
-            display: none;
-            text-align: center;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
         }
 
         .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            position: relative;
+            margin-bottom: 24px;
         }
 
-        input[type="password"] {
-            background-color: var(--md-sys-color-surface);
-            color: var(--md-sys-color-on-background);
-            border: 1px solid var(--md-sys-color-outline);
-            border-radius: var(--md-sys-shape-corner-small);
+        input {
+            width: 100%;
             padding: 16px;
-            font: var(--md-sys-typescale-body-large);
+            font-size: 1rem;
+            color: var(--md-sys-color-on-surface);
+            background-color: transparent;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition: border-color 0.2s;
         }
 
-        input[type="password"]:focus {
+        input:focus {
             border-color: var(--md-sys-color-primary);
-            box-shadow: 0 0 0 2px var(--md-sys-color-primary-container);
+            border-width: 2px;
+            padding: 15px; /* Adjust for border width change */
         }
 
         button {
+            width: 100%;
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
-            font: var(--md-sys-typescale-label-large);
-            font-size: 16px;
-            height: 48px;
             border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
             border-radius: var(--md-sys-shape-corner-full);
             cursor: pointer;
-            transition: opacity 0.2s, box-shadow 0.2s;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            transition: opacity 0.2s, transform 0.1s;
         }
 
         button:hover {
             opacity: 0.9;
-            box-shadow: 0 2px 4px 1px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         button:active {
-            opacity: 0.8;
-            box-shadow: none;
+            transform: scale(0.98);
+        }
+
+        #error-msg {
+            color: var(--md-sys-color-error);
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <main class="login-card">
-        <h1>Authentication</h1>
-
-        <div id="error-banner" class="error-msg">
-            Incorrect password. Please try again.
-        </div>
-
+    <div class="card">
+        <h1>Welcome</h1>
+        <div id="error-msg">Incorrect password. Please try again.</div>
         <form action="/login" method="POST">
             <div class="input-group">
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter Password"
-                    required
-                    autofocus
-                    autocomplete="current-password"
-                >
+                <input type="password" name="password" placeholder="Password" required autofocus>
             </div>
-            <button type="submit">Sign In</button>
+            <button type="submit">Log In</button>
         </form>
-    </main>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('error') === '1') {
-                const banner = document.getElementById('error-banner');
-                if (banner) {
-                    banner.style.display = 'block';
-                }
-            }
-        });
+        // Check URL params for error flag
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('error')) {
+            document.getElementById('error-msg').style.display = 'block';
+        }
     </script>
 </body>
 </html>

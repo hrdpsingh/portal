@@ -4,119 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Share</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z' fill='%237C3AED'/%3E%3Cpath d='M14 2V8H20L14 2Z' fill='%23A78BFA'/%3E%3Cpath d='M8 13H16M8 17H13' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
     <style>
         :root {
-            --md-sys-color-primary: #006c4c;
+            /* Material You (MD3) Color Tokens */
+            --md-sys-color-primary: #6750a4;
             --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #89f8c7;
-            --md-sys-color-on-primary-container: #002114;
-            --md-sys-color-secondary: #4c6358;
-            --md-sys-color-on-secondary: #ffffff;
-            --md-sys-color-secondary-container: #cee9da;
-            --md-sys-color-background: #fbfdf9;
-            --md-sys-color-on-background: #191c1a;
-            --md-sys-color-surface: #fbfdf9;
-            --md-sys-color-surface-variant: #dbe5de;
-            --md-sys-color-on-surface-variant: #404944;
-            --md-sys-color-outline: #707974;
+            --md-sys-color-primary-container: #eaddff;
+            --md-sys-color-on-primary-container: #21005d;
+            --md-sys-color-secondary-container: #e8def8;
+            --md-sys-color-on-secondary-container: #1d192b;
+            --md-sys-color-background: #fef7ff;
+            --md-sys-color-surface: #fef7ff;
+            --md-sys-color-surface-container-high: #ece6f0;
+            --md-sys-color-on-surface: #1d1b20;
+            --md-sys-color-on-surface-variant: #49454f;
 
-            --md-sys-typescale-headline-large: 400 32px/40px system-ui, -apple-system, sans-serif;
-            --md-sys-typescale-body-large: 400 16px/24px system-ui, -apple-system, sans-serif;
-            --md-sys-typescale-label-large: 500 14px/20px system-ui, -apple-system, sans-serif;
-            
             --md-sys-shape-corner-large: 16px;
             --md-sys-shape-corner-full: 9999px;
+            --md-sys-typescale-body: system-ui, -apple-system, sans-serif;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --md-sys-color-primary: #6ddbac;
-                --md-sys-color-on-primary: #003825;
-                --md-sys-color-primary-container: #005138;
-                --md-sys-color-on-primary-container: #89f8c7;
-                --md-sys-color-background: #191c1a;
-                --md-sys-color-on-background: #e1e3df;
-                --md-sys-color-surface: #191c1a;
-                --md-sys-color-surface-variant: #404944;
-                --md-sys-color-on-surface-variant: #bfc9c2;
-                --md-sys-color-outline: #8a938d;
+                --md-sys-color-primary: #d0bcff;
+                --md-sys-color-on-primary: #381e72;
+                --md-sys-color-primary-container: #4f378b;
+                --md-sys-color-on-primary-container: #eaddff;
+                --md-sys-color-secondary-container: #4a4458;
+                --md-sys-color-on-secondary-container: #e8def8;
+                --md-sys-color-background: #141218;
+                --md-sys-color-surface: #141218;
+                --md-sys-color-surface-container-high: #2b2930;
+                --md-sys-color-on-surface: #e6e1e5;
+                --md-sys-color-on-surface-variant: #cac4d0;
             }
         }
 
+        * { box-sizing: border-box; }
+
         body {
             margin: 0;
+            padding: 0;
+            font-family: var(--md-sys-typescale-body);
             background-color: var(--md-sys-color-background);
-            color: var(--md-sys-color-on-background);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            color: var(--md-sys-color-on-surface);
         }
 
         header {
-            width: 100%;
+            padding: 24px 24px 40px 24px;
             max-width: 800px;
-            padding: 64px 24px 32px 24px;
-            box-sizing: border-box;
+            margin: 0 auto;
         }
 
         h1 {
-            font: var(--md-sys-typescale-headline-large);
+            font-size: 2.5rem;
+            font-weight: 400;
             margin: 0;
-            color: var(--md-sys-color-on-background);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 8px 0 0 0;
         }
 
         main {
-            width: 100%;
             max-width: 800px;
-            padding: 0 16px 64px 16px;
-            box-sizing: border-box;
+            margin: 0 auto;
+            padding: 0 16px 40px 16px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
         .file-card {
-            background-color: var(--md-sys-color-surface-variant);
-            border-radius: var(--md-sys-shape-corner-large);
-            padding: 16px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            color: var(--md-sys-color-on-surface-variant);
+            justify-content: space-between;
+            background-color: var(--md-sys-color-surface-container-high);
+            padding: 16px 24px;
+            border-radius: var(--md-sys-shape-corner-large);
+            transition: background-color 0.2s;
+            text-decoration: none;
+            color: inherit;
         }
 
-        .icon-box {
-            width: 48px;
-            height: 48px;
-            background-color: var(--md-sys-color-background);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .icon-box svg {
-            width: 24px;
-            height: 24px;
-            fill: var(--md-sys-color-primary);
+        .file-card:hover {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-secondary-container);
         }
 
         .file-info {
-            flex-grow: 1;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            overflow: hidden;
         }
 
         .file-name {
-            font: var(--md-sys-typescale-body-large);
+            font-size: 1rem;
             font-weight: 500;
-            color: var(--md-sys-color-on-surface-variant);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -124,81 +112,40 @@
         }
 
         .file-size {
-            font: var(--md-sys-typescale-label-large);
-            color: var(--md-sys-color-outline);
+            font-size: 0.875rem;
+            opacity: 0.7;
         }
 
         .download-btn {
-            text-decoration: none;
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
-            height: 40px;
-            padding: 0 24px;
+            padding: 10px 20px;
             border-radius: var(--md-sys-shape-corner-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font: var(--md-sys-typescale-label-large);
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-left: 16px;
             white-space: nowrap;
             flex-shrink: 0;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        .download-btn:hover {
-            box-shadow: 0 2px 4px 1px rgba(0,0,0,0.3);
-            filter: brightness(1.1);
-        }
-
-        .download-btn:active {
-            filter: brightness(0.9);
-            box-shadow: none;
-        }
-
-        .download-btn svg {
-            width: 18px;
-            height: 18px;
-            margin-right: 8px;
-            fill: currentColor;
-        }
-
-        .state-msg {
+        .loader {
             text-align: center;
             padding: 40px;
-            color: var(--md-sys-color-outline);
-            font: var(--md-sys-typescale-body-large);
-        }
-
-        @media (max-width: 600px) {
-            .download-btn span {
-                display: none; 
-            }
-            .download-btn {
-                padding: 0;
-                width: 40px;
-            }
-            .download-btn svg {
-                margin-right: 0;
-            }
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
-
     <header>
         <h1>Shared Files</h1>
+        <h2 id="count">Loading...</h2>
     </header>
 
-    <main id="file-list-container">
-        <div class="state-msg">Loading files...</div>
+    <main id="file-list">
+        <div class="loader">Fetching metadata...</div>
     </main>
 
     <script>
-        const ICON_FILE = `<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>`;
-        const ICON_DOWNLOAD = `<svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`;
-
         function formatBytes(bytes, decimals = 2) {
             if (!+bytes) return '0 Bytes';
             const k = 1024;
@@ -208,58 +155,52 @@
             return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
         }
 
-        async function fetchFiles() {
-            const container = document.getElementById('file-list-container');
-            
+        async function loadFiles() {
             try {
                 const response = await fetch('/metadata');
-                if (!response.ok) throw new Error('Network response was not ok');
-                
+                if (!response.ok) {
+                    throw new Error("Failed to load");
+                }
                 const files = await response.json();
-                
-                container.innerHTML = '';
+
+                const list = document.getElementById('file-list');
+                const count = document.getElementById('count');
+
+                list.innerHTML = '';
+                count.textContent = `${files.length} file${files.length !== 1 ? 's' : ''} available`;
 
                 if (files.length === 0) {
-                    container.innerHTML = '<div class="state-msg">No files currently shared.</div>';
+                    list.innerHTML = '<div class="loader">No files shared.</div>';
                     return;
                 }
 
                 files.forEach(file => {
-                    const card = document.createElement('div');
+                    const card = document.createElement('a');
                     card.className = 'file-card';
+                    card.href = `/download/${file.uuid}`;
+                    // Force download attribute to help browser
+                    card.setAttribute('download', '');
 
                     card.innerHTML = `
-                        <div class="icon-box">${ICON_FILE}</div>
                         <div class="file-info">
-                            <div class="file-name" title="${escapeHtml(file.file_name)}">${escapeHtml(file.file_name)}</div>
-                            <div class="file-size">${formatBytes(file.file_size)}</div>
+                            <span class="file-name" title="${file.file_name}">${file.file_name}</span>
+                            <span class="file-size">${formatBytes(file.file_size)}</span>
                         </div>
-                        <a href="/download/${file.uuid}" class="download-btn" download>
-                            ${ICON_DOWNLOAD}
-                            <span>Download</span>
-                        </a>
+                        <div class="download-btn">Download</div>
                     `;
-                    container.appendChild(card);
+                    list.appendChild(card);
                 });
 
             } catch (error) {
-                console.error('Error fetching files:', error);
-                container.innerHTML = '<div class="state-msg">Failed to load file list.</div>';
+                document.getElementById('file-list').innerHTML = `
+                    <div class="loader" style="color: var(--md-sys-color-error)">
+                        Error loading files. Please refresh.
+                    </div>
+                `;
             }
         }
 
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-        }
-
-        document.addEventListener('DOMContentLoaded', fetchFiles);
+        loadFiles();
     </script>
 </body>
 </html>
