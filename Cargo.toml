@@ -5,8 +5,10 @@ edition = "2024"
 
 [dependencies]
 axum = { version = "0.8.8", features = ["json"] }
+axum-server = { version = "0.8.0", features = ["tls-rustls"] }
 clap = { version = "4.5.54", features = ["derive"] }
 local-ip-address = "0.6.9"
+rcgen = "0.14.7"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 tokio = { version = "1.49.0", features = ["full"] }

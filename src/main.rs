@@ -8,9 +8,11 @@ use axum::{
 };
 use clap::Parser;
 use local_ip_address::local_ip;
-use std::{fs, net::SocketAddr, path::PathBuf, process, sync::Arc};
+use std::{fs, net::{SocketAddr, IpAddr}, path::PathBuf, process, sync::Arc, error::Error};
 use tokio_util::io::ReaderStream;
 use uuid::Uuid;
+use rcgen::{CertificateParams, DistinguishedName, KeyPair};
+use axum_server::tls_rustls::RustlsConfig;
 
 #[derive(Parser)]
 struct Args {
@@ -27,7 +29,7 @@ struct Files {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn Error>> {
     let local_ip = match local_ip() {
         Ok(local_ip) => local_ip,
         Err(error) => {
@@ -85,6 +87,13 @@ async fn main() {
         });
     }
 
+    let (cert_pem, key_pem) = generate_cert(local_ip)?;
+
+    let config = RustlsConfig::from_pem(
+        cert_pem.into_bytes(),
+        key_pem.into_bytes()
+    ).await?;
+
     let shared_state = Arc::new(files);
     let addr = SocketAddr::new(local_ip, 8000);
     let app = Router::new()
@@ -93,22 +102,14 @@ async fn main() {
         .route("/download/{uuid}", get(download_file))
         .with_state(shared_state);
 
-    let listener = match tokio::net::TcpListener::bind(addr).await {
-        Ok(l) => l,
-        Err(e) => {
-            eprintln!("Failed to bind to address {}: {}", addr, e);
-            process::exit(1);
-        }
-    };
+    println!("Server running at https://{}", addr);
+    println!("Press Ctrl+C to stop...");
 
-    println!("Server running at http://{}", addr);
-    println!("If you cannot connect, check your firewall rules for port 8000.");
-    println!("Enter 'ctrl + c' to stop...");
+    axum_server::bind_rustls(addr, config)
+        .serve(app.into_make_service())
+        .await?;
 
-    match axum::serve(listener, app).await {
-        Ok(_) => println!("Server shut down successfully"),
-        Err(e) => eprintln!("Server error: {}", e),
-    }
+    Ok(())
 }
 
 async fn get_metadata(State(files): State<Arc<Vec<Files>>>) -> impl IntoResponse {
@@ -138,7 +139,21 @@ async fn download_file(
         .header(header::CONTENT_DISPOSITION, content_disposition)
         .header(header::CONTENT_LENGTH, file_info.file_size)
         .body(body)
-        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Failed to build response"))?; 
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Failed to build response"))?;
 
     Ok(res)
+}
+
+fn generate_cert(local_ip: IpAddr) -> Result<(String, String), Box<dyn Error>> {
+    let key_pair = KeyPair::generate()?;
+    let mut params = CertificateParams::default();
+
+    params.distinguished_name = DistinguishedName::new();
+    params.distinguished_name.push(rcgen::DnType::CommonName, local_ip.to_string());
+    params.subject_alt_names = vec![
+        rcgen::SanType::IpAddress(local_ip),
+    ];
+
+    let cert = params.self_signed(&key_pair)?;
+    Ok((cert.pem(), key_pair.serialize_pem()))
 }
