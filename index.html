@@ -4,203 +4,462 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Share</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z' fill='%237C3AED'/%3E%3Cpath d='M14 2V8H20L14 2Z' fill='%23A78BFA'/%3E%3Cpath d='M8 13H16M8 17H13' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
     <style>
         :root {
-            /* Material You (MD3) Color Tokens */
-            --md-sys-color-primary: #6750a4;
-            --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #eaddff;
-            --md-sys-color-on-primary-container: #21005d;
-            --md-sys-color-secondary-container: #e8def8;
-            --md-sys-color-on-secondary-container: #1d192b;
-            --md-sys-color-background: #fef7ff;
-            --md-sys-color-surface: #fef7ff;
-            --md-sys-color-surface-container-high: #ece6f0;
-            --md-sys-color-on-surface: #1d1b20;
-            --md-sys-color-on-surface-variant: #49454f;
+            --md-source: #6750A4;
 
-            --md-sys-shape-corner-large: 16px;
-            --md-sys-shape-corner-full: 9999px;
-            --md-sys-typescale-body: system-ui, -apple-system, sans-serif;
+            /* Light theme */
+            --md-sys-color-primary-light: #6750A4;
+            --md-sys-color-on-primary-light: #FFFFFF;
+            --md-sys-color-primary-container-light: #EADDFF;
+            --md-sys-color-on-primary-container-light: #21005D;
+            --md-sys-color-surface-light: #FEF7FF;
+            --md-sys-color-surface-container-light: #F3EDF7;
+            --md-sys-color-surface-container-low-light: #F7F2FA;
+            --md-sys-color-on-surface-light: #1D1B20;
+            --md-sys-color-on-surface-variant-light: #49454F;
+            --md-sys-color-outline-light: #79747E;
+            --md-sys-color-outline-variant-light: #CAC4D0;
+            --md-sys-color-secondary-container-light: #E8DEF8;
+
+            /* Dark theme */
+            --md-sys-color-primary-dark: #D0BCFF;
+            --md-sys-color-on-primary-dark: #381E72;
+            --md-sys-color-primary-container-dark: #4F378B;
+            --md-sys-color-on-primary-container-dark: #EADDFF;
+            --md-sys-color-surface-dark: #141218;
+            --md-sys-color-surface-container-dark: #211F26;
+            --md-sys-color-surface-container-low-dark: #1D1B20;
+            --md-sys-color-on-surface-dark: #E6E0E9;
+            --md-sys-color-on-surface-variant-dark: #CAC4D0;
+            --md-sys-color-outline-dark: #938F99;
+            --md-sys-color-outline-variant-dark: #49454F;
+            --md-sys-color-secondary-container-dark: #4A4458;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --md-sys-color-primary: var(--md-sys-color-primary-light);
+                --md-sys-color-on-primary: var(--md-sys-color-on-primary-light);
+                --md-sys-color-primary-container: var(--md-sys-color-primary-container-light);
+                --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-light);
+                --md-sys-color-surface: var(--md-sys-color-surface-light);
+                --md-sys-color-surface-container: var(--md-sys-color-surface-container-light);
+                --md-sys-color-surface-container-low: var(--md-sys-color-surface-container-low-light);
+                --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
+                --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
+                --md-sys-color-outline: var(--md-sys-color-outline-light);
+                --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-light);
+                --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-light);
+            }
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --md-sys-color-primary: #d0bcff;
-                --md-sys-color-on-primary: #381e72;
-                --md-sys-color-primary-container: #4f378b;
-                --md-sys-color-on-primary-container: #eaddff;
-                --md-sys-color-secondary-container: #4a4458;
-                --md-sys-color-on-secondary-container: #e8def8;
-                --md-sys-color-background: #141218;
-                --md-sys-color-surface: #141218;
-                --md-sys-color-surface-container-high: #2b2930;
-                --md-sys-color-on-surface: #e6e1e5;
-                --md-sys-color-on-surface-variant: #cac4d0;
+                --md-sys-color-primary: var(--md-sys-color-primary-dark);
+                --md-sys-color-on-primary: var(--md-sys-color-on-primary-dark);
+                --md-sys-color-primary-container: var(--md-sys-color-primary-container-dark);
+                --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-dark);
+                --md-sys-color-surface: var(--md-sys-color-surface-dark);
+                --md-sys-color-surface-container: var(--md-sys-color-surface-container-dark);
+                --md-sys-color-surface-container-low: var(--md-sys-color-surface-container-low-dark);
+                --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
+                --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
+                --md-sys-color-outline: var(--md-sys-color-outline-dark);
+                --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-dark);
+                --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-dark);
             }
         }
 
-        * { box-sizing: border-box; }
-
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: var(--md-sys-typescale-body);
-            background-color: var(--md-sys-color-background);
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 24px 16px;
         }
 
         header {
-            padding: 24px 24px 40px 24px;
-            max-width: 800px;
-            margin: 0 auto;
+            text-align: center;
+            margin-bottom: 32px;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 28px;
             font-weight: 400;
-            margin: 0;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 8px;
         }
 
-        h2 {
-            font-size: 1.2rem;
-            font-weight: 400;
+        .subtitle {
+            font-size: 14px;
             color: var(--md-sys-color-on-surface-variant);
-            margin: 8px 0 0 0;
         }
 
-        main {
-            max-width: 800px;
+        .login-card {
+            background-color: var(--md-sys-color-surface-container);
+            border-radius: 28px;
+            padding: 24px;
+            max-width: 400px;
             margin: 0 auto;
-            padding: 0 16px 40px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
-        .file-card {
-            display: flex;
+        .login-card h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .input-field {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 4px;
+            background-color: transparent;
+            color: var(--md-sys-color-on-surface);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field input:focus {
+            border-color: var(--md-sys-color-primary);
+            border-width: 2px;
+        }
+
+        .input-field label {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--md-sys-color-on-surface-variant);
+            pointer-events: none;
+            transition: all 0.2s;
+            background-color: var(--md-sys-color-surface-container);
+            padding: 0 4px;
+        }
+
+        .input-field input:focus + label,
+        .input-field input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 12px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .btn {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            background-color: var(--md-sys-color-surface-container-high);
-            padding: 16px 24px;
-            border-radius: var(--md-sys-shape-corner-large);
-            transition: background-color 0.2s;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .file-card:hover {
-            background-color: var(--md-sys-color-secondary-container);
-            color: var(--md-sys-color-on-secondary-container);
-        }
-
-        .file-info {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .file-name {
-            font-size: 1rem;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 24px;
+            font-size: 14px;
             font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 4px;
+            letter-spacing: 0.1px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
         }
 
-        .file-size {
-            font-size: 0.875rem;
-            opacity: 0.7;
-        }
-
-        .download-btn {
+        .btn-filled {
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
-            padding: 10px 20px;
-            border-radius: var(--md-sys-shape-corner-full);
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin-left: 16px;
-            white-space: nowrap;
+            width: 100%;
+        }
+
+        .btn-filled:hover {
+            box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-tonal {
+            background-color: var(--md-sys-color-secondary-container);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .btn-tonal:hover {
+            box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .error-message {
+            background-color: #F9DEDC;
+            color: #410E0B;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .error-message {
+                background-color: #8C1D18;
+                color: #F9DEDC;
+            }
+        }
+
+        .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background-color: var(--md-sys-color-surface-container-low);
+            border-radius: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .file-item:hover {
+            background-color: var(--md-sys-color-surface-container);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: var(--md-sys-color-primary-container);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
 
-        .loader {
+        .file-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--md-sys-color-on-primary-container);
+        }
+
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--md-sys-color-on-surface);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .download-btn {
+            flex-shrink: 0;
+        }
+
+        .loading {
             text-align: center;
-            padding: 40px;
-            opacity: 0.7;
+            padding: 48px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--md-sys-color-surface-container);
+            border-top-color: var(--md-sys-color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            fill: var(--md-sys-color-outline);
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .file-item {
+                flex-wrap: wrap;
+            }
+
+            .download-btn {
+                width: 100%;
+                margin-top: 8px;
+            }
+
+            .download-btn .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Shared Files</h1>
-        <h2 id="count">Loading...</h2>
-    </header>
+    <div class="container">
+        <header>
+            <h1>File Share</h1>
+            <p class="subtitle">Secure file sharing</p>
+        </header>
 
-    <main id="file-list">
-        <div class="loader">Fetching metadata...</div>
-    </main>
+        <main id="main-content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+        </main>
+    </div>
 
     <script>
-        function formatBytes(bytes, decimals = 2) {
-            if (!+bytes) return '0 Bytes';
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        const isLoginPage = window.location.pathname === '/login' || window.location.search.includes('error=');
+
+        function getErrorFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('error');
         }
 
-        async function loadFiles() {
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function renderLogin() {
+            const error = getErrorFromUrl();
+            const errorHtml = error === 'invalid_password'
+                ? '<div class="error-message">Invalid password. Please try again.</div>'
+                : '';
+
+            document.getElementById('main-content').innerHTML = `
+                <div class="login-card">
+                    <h2>Sign in</h2>
+                    ${errorHtml}
+                    <form action="/login" method="POST">
+                        <div class="input-field">
+                            <input type="password" name="password" id="password" placeholder=" " required autofocus>
+                            <label for="password">Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-filled">Continue</button>
+                    </form>
+                </div>
+            `;
+        }
+
+        function renderFiles(files) {
+            if (files.length === 0) {
+                document.getElementById('main-content').innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+                        </svg>
+                        <p>No files available</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const fileListHtml = files.map(file => `
+                <div class="file-item">
+                    <div class="file-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+                        </svg>
+                    </div>
+                    <div class="file-info">
+                        <div class="file-name" title="${file.file_name}">${file.file_name}</div>
+                        <div class="file-size">${formatFileSize(file.file_size)}</div>
+                    </div>
+                    <div class="download-btn">
+                        <a href="/download/${file.uuid}" class="btn btn-tonal">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
+                            Download
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('main-content').innerHTML = `
+                <div class="file-list">
+                    ${fileListHtml}
+                </div>
+            `;
+        }
+
+        async function init() {
             try {
                 const response = await fetch('/metadata');
-                if (!response.ok) {
-                    throw new Error("Failed to load");
-                }
-                const files = await response.json();
 
-                const list = document.getElementById('file-list');
-                const count = document.getElementById('count');
-
-                list.innerHTML = '';
-                count.textContent = `${files.length} file${files.length !== 1 ? 's' : ''} available`;
-
-                if (files.length === 0) {
-                    list.innerHTML = '<div class="loader">No files shared.</div>';
+                if (response.status === 401) {
+                    renderLogin();
                     return;
                 }
 
-                files.forEach(file => {
-                    const card = document.createElement('a');
-                    card.className = 'file-card';
-                    card.href = `/download/${file.uuid}`;
-                    // Force download attribute to help browser
-                    card.setAttribute('download', '');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch metadata');
+                }
 
-                    card.innerHTML = `
-                        <div class="file-info">
-                            <span class="file-name" title="${file.file_name}">${file.file_name}</span>
-                            <span class="file-size">${formatBytes(file.file_size)}</span>
-                        </div>
-                        <div class="download-btn">Download</div>
-                    `;
-                    list.appendChild(card);
-                });
-
+                const files = await response.json();
+                renderFiles(files);
             } catch (error) {
-                document.getElementById('file-list').innerHTML = `
-                    <div class="loader" style="color: var(--md-sys-color-error)">
-                        Error loading files. Please refresh.
-                    </div>
-                `;
+                if (isLoginPage || getErrorFromUrl()) {
+                    renderLogin();
+                } else {
+                    document.getElementById('main-content').innerHTML = `
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                            </svg>
+                            <p>Unable to load files. Please try again.</p>
+                        </div>
+                    `;
+                }
             }
         }
 
-        loadFiles();
+        init();
     </script>
 </body>
 </html>
