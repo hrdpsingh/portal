@@ -1,4 +1,5 @@
 use clap::Parser;
+use serde::Deserialize;
 use std::path::PathBuf;
 use uuid::Uuid;
 
@@ -24,4 +25,9 @@ pub struct AppState {
     pub metadata: Vec<FileInfo>,
     pub password: String,
     pub auth_token: String,
+}
+
+#[derive(Deserialize)]
+pub struct LoginPayload {
+    pub password: String,
 }

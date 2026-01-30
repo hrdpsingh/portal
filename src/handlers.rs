@@ -1,4 +1,4 @@
-use crate::models::AppState;
+use crate::models::{AppState, LoginPayload};
 use axum::{
     Form, Json,
     body::Body,
@@ -8,15 +8,9 @@ use axum::{
     response::{Html, IntoResponse, Redirect, Response},
 };
 use axum_extra::extract::cookie::{Cookie, CookieJar};
-use serde::Deserialize;
 use std::sync::Arc;
 use tokio_util::io::ReaderStream;
 use uuid::Uuid;
-
-#[derive(Deserialize)]
-pub struct LoginPayload {
-    password: String,
-}
 
 pub async fn metadata(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     Json(state.metadata.clone())
@@ -83,11 +77,11 @@ pub async fn login(
         let cookie = Cookie::build(("session", state.auth_token.clone()))
             .path("/")
             .http_only(true)
-            .secure(false)
+            .secure(true)
             .build();
 
         (jar.add(cookie), Redirect::to("/"))
     } else {
-        (jar, Redirect::to("/login?error=invalid_password"))
+        (jar, Redirect::to("/?error=invalid_password"))
     }
 }

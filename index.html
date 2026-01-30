@@ -3,71 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Share</title>
+    <title>Portal</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='512' height='512' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 4C2.89543 4 2 4.89543 2 6V18C2 19.1046 2.89543 20 4 20H20C21.1046 20 22 19.1046 22 18V9C22 7.89543 21.1046 7 20 7H12L10 4H4Z' fill='%23D1BCFF'/%3E%3Cpath d='M2 10C2 8.89543 2.89543 8 4 8H20C21.1046 8 22 8.89543 22 10V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V10Z' fill='%236750A4'/%3E%3C/svg%3E">
     <style>
         :root {
-            --md-source: #6750A4;
-
-            /* Light theme */
-            --md-sys-color-primary-light: #6750A4;
-            --md-sys-color-on-primary-light: #FFFFFF;
-            --md-sys-color-primary-container-light: #EADDFF;
-            --md-sys-color-on-primary-container-light: #21005D;
-            --md-sys-color-surface-light: #FEF7FF;
-            --md-sys-color-surface-container-light: #F3EDF7;
-            --md-sys-color-surface-container-low-light: #F7F2FA;
-            --md-sys-color-on-surface-light: #1D1B20;
-            --md-sys-color-on-surface-variant-light: #49454F;
-            --md-sys-color-outline-light: #79747E;
-            --md-sys-color-outline-variant-light: #CAC4D0;
-            --md-sys-color-secondary-container-light: #E8DEF8;
-
-            /* Dark theme */
-            --md-sys-color-primary-dark: #D0BCFF;
-            --md-sys-color-on-primary-dark: #381E72;
-            --md-sys-color-primary-container-dark: #4F378B;
-            --md-sys-color-on-primary-container-dark: #EADDFF;
-            --md-sys-color-surface-dark: #141218;
-            --md-sys-color-surface-container-dark: #211F26;
-            --md-sys-color-surface-container-low-dark: #1D1B20;
-            --md-sys-color-on-surface-dark: #E6E0E9;
-            --md-sys-color-on-surface-variant-dark: #CAC4D0;
-            --md-sys-color-outline-dark: #938F99;
-            --md-sys-color-outline-variant-dark: #49454F;
-            --md-sys-color-secondary-container-dark: #4A4458;
-        }
-
-        @media (prefers-color-scheme: light) {
-            :root {
-                --md-sys-color-primary: var(--md-sys-color-primary-light);
-                --md-sys-color-on-primary: var(--md-sys-color-on-primary-light);
-                --md-sys-color-primary-container: var(--md-sys-color-primary-container-light);
-                --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-light);
-                --md-sys-color-surface: var(--md-sys-color-surface-light);
-                --md-sys-color-surface-container: var(--md-sys-color-surface-container-light);
-                --md-sys-color-surface-container-low: var(--md-sys-color-surface-container-low-light);
-                --md-sys-color-on-surface: var(--md-sys-color-on-surface-light);
-                --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-light);
-                --md-sys-color-outline: var(--md-sys-color-outline-light);
-                --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-light);
-                --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-light);
-            }
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-surface: #FEF7FF;
+            --md-sys-color-surface-container: #F3EDF7;
+            --md-sys-color-surface-container-high: #ECE6F0;
+            --md-sys-color-surface-container-highest: #E6E0E9;
+            --md-sys-color-on-surface: #1D1B20;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-outline-variant: #CAC4D0;
+            --md-sys-color-error: #B3261E;
+            --md-sys-color-error-container: #F9DEDC;
+            --md-sys-color-on-error-container: #410E0B;
+            --md-sys-color-shadow: rgba(0, 0, 0, 0.15);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --md-sys-color-primary: var(--md-sys-color-primary-dark);
-                --md-sys-color-on-primary: var(--md-sys-color-on-primary-dark);
-                --md-sys-color-primary-container: var(--md-sys-color-primary-container-dark);
-                --md-sys-color-on-primary-container: var(--md-sys-color-on-primary-container-dark);
-                --md-sys-color-surface: var(--md-sys-color-surface-dark);
-                --md-sys-color-surface-container: var(--md-sys-color-surface-container-dark);
-                --md-sys-color-surface-container-low: var(--md-sys-color-surface-container-low-dark);
-                --md-sys-color-on-surface: var(--md-sys-color-on-surface-dark);
-                --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface-variant-dark);
-                --md-sys-color-outline: var(--md-sys-color-outline-dark);
-                --md-sys-color-outline-variant: var(--md-sys-color-outline-variant-dark);
-                --md-sys-color-secondary-container: var(--md-sys-color-secondary-container-dark);
+                --md-sys-color-primary: #D0BCFF;
+                --md-sys-color-on-primary: #381E72;
+                --md-sys-color-primary-container: #4F378B;
+                --md-sys-color-on-primary-container: #EADDFF;
+                --md-sys-color-surface: #141218;
+                --md-sys-color-surface-container: #211F26;
+                --md-sys-color-surface-container-high: #2B2930;
+                --md-sys-color-surface-container-highest: #36343B;
+                --md-sys-color-on-surface: #E6E0E9;
+                --md-sys-color-on-surface-variant: #CAC4D0;
+                --md-sys-color-outline: #938F99;
+                --md-sys-color-outline-variant: #49454F;
+                --md-sys-color-error: #F2B8B5;
+                --md-sys-color-error-container: #8C1D18;
+                --md-sys-color-on-error-container: #F9DEDC;
+                --md-sys-color-shadow: rgba(0, 0, 0, 0.3);
             }
         }
 
@@ -86,7 +61,7 @@
         }
 
         .container {
-            max-width: 840px;
+            max-width: 720px;
             margin: 0 auto;
             padding: 24px 16px;
         }
@@ -108,12 +83,16 @@
             color: var(--md-sys-color-on-surface-variant);
         }
 
-        .login-card {
+        .card {
             background-color: var(--md-sys-color-surface-container);
-            border-radius: 28px;
+            border-radius: 16px;
             padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .login-card {
             max-width: 400px;
-            margin: 0 auto;
+            margin: 64px auto;
         }
 
         .login-card h2 {
@@ -143,6 +122,7 @@
         .input-field input:focus {
             border-color: var(--md-sys-color-primary);
             border-width: 2px;
+            padding: 15px;
         }
 
         .input-field label {
@@ -188,53 +168,52 @@
         }
 
         .btn-filled:hover {
-            box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 3px var(--md-sys-color-shadow);
         }
 
         .btn-tonal {
-            background-color: var(--md-sys-color-secondary-container);
+            background-color: var(--md-sys-color-surface-container-highest);
             color: var(--md-sys-color-on-surface);
         }
 
         .btn-tonal:hover {
-            box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            background-color: var(--md-sys-color-outline-variant);
         }
 
         .error-message {
-            background-color: #F9DEDC;
-            color: #410E0B;
+            background-color: var(--md-sys-color-error-container);
+            color: var(--md-sys-color-on-error-container);
             padding: 12px 16px;
-            border-radius: 12px;
+            border-radius: 8px;
             margin-bottom: 16px;
             font-size: 14px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .error-message {
-                background-color: #8C1D18;
-                color: #F9DEDC;
-            }
+        .error-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
         }
 
         .file-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            list-style: none;
         }
 
         .file-item {
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background-color: var(--md-sys-color-surface-container-low);
-            border-radius: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            background-color: var(--md-sys-color-surface-container-high);
             transition: background-color 0.2s;
         }
 
         .file-item:hover {
-            background-color: var(--md-sys-color-surface-container);
+            background-color: var(--md-sys-color-surface-container-highest);
         }
 
         .file-icon {
@@ -245,6 +224,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-right: 16px;
             flex-shrink: 0;
         }
 
@@ -263,43 +243,44 @@
             font-size: 16px;
             font-weight: 400;
             color: var(--md-sys-color-on-surface);
-            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .file-size {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--md-sys-color-on-surface-variant);
+            margin-top: 2px;
         }
 
         .download-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
             flex-shrink: 0;
         }
 
-        .loading {
-            text-align: center;
-            padding: 48px;
-            color: var(--md-sys-color-on-surface-variant);
+        .download-btn:hover {
+            background-color: var(--md-sys-color-surface-container-highest);
         }
 
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--md-sys-color-surface-container);
-            border-top-color: var(--md-sys-color-primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--md-sys-color-primary);
         }
 
         .empty-state {
             text-align: center;
-            padding: 48px;
+            padding: 48px 24px;
             color: var(--md-sys-color-on-surface-variant);
         }
 
@@ -310,8 +291,36 @@
             margin-bottom: 16px;
         }
 
-        @media (max-width: 600px) {
+        .loading {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--md-sys-color-surface-container-highest);
+            border-top-color: var(--md-sys-color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
             .container {
+                padding: 16px 12px;
+            }
+
+            .card {
                 padding: 16px;
             }
 
@@ -320,16 +329,18 @@
             }
 
             .file-item {
-                flex-wrap: wrap;
+                padding: 10px 12px;
             }
 
-            .download-btn {
-                width: 100%;
-                margin-top: 8px;
+            .file-icon {
+                width: 36px;
+                height: 36px;
+                margin-right: 12px;
             }
 
-            .download-btn .btn {
-                width: 100%;
+            .file-icon svg {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
@@ -337,70 +348,73 @@
 <body>
     <div class="container">
         <header>
-            <h1>File Share</h1>
+            <h1>Portal</h1>
             <p class="subtitle">Secure file sharing</p>
         </header>
 
-        <main id="main-content">
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>Loading...</p>
+        <div id="login-view" class="hidden">
+            <div class="card login-card">
+                <h2>Sign in</h2>
+                <div id="error-container" class="error-message hidden">
+                    <svg class="error-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <span>Invalid password. Please try again.</span>
+                </div>
+                <form action="/login" method="POST">
+                    <div class="input-field">
+                        <input type="password" id="password" name="password" placeholder=" " required autocomplete="current-password">
+                        <label for="password">Password</label>
+                    </div>
+                    <button type="submit" class="btn btn-filled">Continue</button>
+                </form>
             </div>
-        </main>
+        </div>
+
+        <div id="files-view" class="hidden">
+            <div class="card">
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading files...</p>
+                </div>
+                <div id="empty-state" class="empty-state hidden">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
+                    </svg>
+                    <p>No files available</p>
+                </div>
+                <ul id="file-list" class="file-list hidden"></ul>
+            </div>
+        </div>
     </div>
 
     <script>
-        const isLoginPage = window.location.pathname === '/login' || window.location.search.includes('error=');
+        (function() {
+            const loginView = document.getElementById('login-view');
+            const filesView = document.getElementById('files-view');
+            const errorContainer = document.getElementById('error-container');
+            const loading = document.getElementById('loading');
+            const emptyState = document.getElementById('empty-state');
+            const fileList = document.getElementById('file-list');
 
-        function getErrorFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('error');
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 B';
-            const k = 1024;
-            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function renderLogin() {
-            const error = getErrorFromUrl();
-            const errorHtml = error === 'invalid_password'
-                ? '<div class="error-message">Invalid password. Please try again.</div>'
-                : '';
-
-            document.getElementById('main-content').innerHTML = `
-                <div class="login-card">
-                    <h2>Sign in</h2>
-                    ${errorHtml}
-                    <form action="/login" method="POST">
-                        <div class="input-field">
-                            <input type="password" name="password" id="password" placeholder=" " required autofocus>
-                            <label for="password">Password</label>
-                        </div>
-                        <button type="submit" class="btn btn-filled">Continue</button>
-                    </form>
-                </div>
-            `;
-        }
-
-        function renderFiles(files) {
-            if (files.length === 0) {
-                document.getElementById('main-content').innerHTML = `
-                    <div class="empty-state">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
-                        </svg>
-                        <p>No files available</p>
-                    </div>
-                `;
-                return;
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error')) {
+                errorContainer.classList.remove('hidden');
+                window.history.replaceState({}, document.title, '/');
             }
 
-            const fileListHtml = files.map(file => `
-                <div class="file-item">
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            function createFileItem(file) {
+                const li = document.createElement('li');
+                li.className = 'file-item';
+                li.innerHTML = `
                     <div class="file-icon">
                         <svg viewBox="0 0 24 24">
                             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
@@ -410,56 +424,56 @@
                         <div class="file-name" title="${file.file_name}">${file.file_name}</div>
                         <div class="file-size">${formatFileSize(file.file_size)}</div>
                     </div>
-                    <div class="download-btn">
-                        <a href="/download/${file.uuid}" class="btn btn-tonal">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                            </svg>
-                            Download
-                        </a>
-                    </div>
-                </div>
-            `).join('');
+                    <a href="/download/${file.uuid}" class="download-btn" title="Download">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                    </a>
+                `;
+                return li;
+            }
 
-            document.getElementById('main-content').innerHTML = `
-                <div class="file-list">
-                    ${fileListHtml}
-                </div>
-            `;
-        }
+            function renderFiles(files) {
+                loading.classList.add('hidden');
 
-        async function init() {
-            try {
-                const response = await fetch('/metadata');
-
-                if (response.status === 401) {
-                    renderLogin();
+                if (files.length === 0) {
+                    emptyState.classList.remove('hidden');
                     return;
                 }
 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch metadata');
-                }
+                fileList.innerHTML = '';
+                files.forEach(file => {
+                    fileList.appendChild(createFileItem(file));
+                });
+                fileList.classList.remove('hidden');
+            }
 
-                const files = await response.json();
-                renderFiles(files);
-            } catch (error) {
-                if (isLoginPage || getErrorFromUrl()) {
-                    renderLogin();
-                } else {
-                    document.getElementById('main-content').innerHTML = `
-                        <div class="empty-state">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                            </svg>
-                            <p>Unable to load files. Please try again.</p>
-                        </div>
-                    `;
+            async function fetchMetadata() {
+                try {
+                    const response = await fetch('/metadata');
+
+                    if (response.status === 401) {
+                        loginView.classList.remove('hidden');
+                        filesView.classList.add('hidden');
+                        return;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch metadata');
+                    }
+
+                    const files = await response.json();
+                    filesView.classList.remove('hidden');
+                    loginView.classList.add('hidden');
+                    renderFiles(files);
+                } catch (error) {
+                    loginView.classList.remove('hidden');
+                    filesView.classList.add('hidden');
                 }
             }
-        }
 
-        init();
+            fetchMetadata();
+        })();
     </script>
 </body>
 </html>

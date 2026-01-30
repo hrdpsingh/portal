@@ -7,12 +7,12 @@ use axum::{
     routing::{get, post},
 };
 use axum_server::tls_rustls::RustlsConfig;
-use local_ip_address::local_ip;
-use std::{error::Error, net::SocketAddr, sync::Arc};
-use uuid::Uuid;
 use clap::Parser;
+use local_ip_address::local_ip;
 use models::{AppState, Args};
-use tower_governor::{governor::GovernorConfigBuilder, GovernorLayer};
+use std::{error::Error, net::SocketAddr, sync::Arc};
+use tower_governor::{GovernorLayer, governor::GovernorConfigBuilder};
+use uuid::Uuid;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -32,15 +32,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .per_second(1)
             .burst_size(3)
             .finish()
-            .ok_or("could not create governor configuration")?
+            .ok_or("could not create governor configuration")?,
     );
 
     let app = Router::new()
         .route("/metadata", get(handlers::metadata))
         .route("/download/{uuid}", get(handlers::file))
-        .layer(middleware::from_fn_with_state(shared_state.clone(), handlers::auth))
+        .layer(middleware::from_fn_with_state(
+            shared_state.clone(),
+            handlers::auth,
+        ))
         .route("/", get(handlers::index))
-        .route("/login", post(handlers::login).layer(GovernorLayer::new(governor_config)))
+        .route(
+            "/login",
+            post(handlers::login).layer(GovernorLayer::new(governor_config)),
+        )
         .with_state(shared_state);
 
     let local_ip = local_ip()?;
