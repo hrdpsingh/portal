@@ -9,6 +9,7 @@ use axum::{
 };
 use axum_extra::extract::cookie::{Cookie, CookieJar};
 use std::sync::Arc;
+use tokio::fs::File;
 use tokio_util::io::ReaderStream;
 use uuid::Uuid;
 
@@ -16,18 +17,19 @@ pub async fn metadata(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     Json(state.metadata.clone())
 }
 
-pub async fn file(Path(uuid): Path<Uuid>, State(state): State<Arc<AppState>>) -> impl IntoResponse {
+pub async fn file(
+    Path(uuid): Path<Uuid>,
+    State(state): State<Arc<AppState>>,
+) -> Result<Response<Body>, (StatusCode, &'static str)> {
     let file_info = state
         .metadata
         .iter()
         .find(|f| f.uuid == uuid)
         .ok_or((StatusCode::NOT_FOUND, "File not found"))?;
 
-    let file = match tokio::fs::File::open(&file_info.file_path).await {
-        Ok(file) => file,
-        Err(_) => return Err((StatusCode::INTERNAL_SERVER_ERROR, "File system error")),
-    };
-
+    let file = File::open(&file_info.file_path)
+        .await
+        .map_err(|_| (StatusCode::INTERNAL_SERVER_ERROR, "Failed to open file"))?;
     let stream = ReaderStream::new(file);
     let body = Body::from_stream(stream);
     let content_disposition = format!("attachment; filename=\"{}\"", file_info.file_name);

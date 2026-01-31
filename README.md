@@ -1,9 +1,6 @@
 # Portal
 
-**Portal** is a lightweight, secure file-sharing tool designed for transferring files across your local network.
-
-## Description
-Portal allows you to serve files from your machine to any other device on the same local network via a web browser. It focuses on being extremely resource-efficient while maintaining security through encryption.
+**Portal** is a lightweight, secure file-sharing tool designed for transferring files across your local network. It allows you to serve files from your machine to any other device on the same local network via a web browser. It focuses on being extremely resource-efficient while maintaining security through encryption.
 
 ## Features
 *   Serves all files over **HTTPS**.
