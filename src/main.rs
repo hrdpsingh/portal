@@ -51,13 +51,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let local_ip = local_ip()?;
     let addr = SocketAddr::new(local_ip, 8000);
+    let (cert_pem, keys_pem) = utilities::generate_cert(local_ip)?;
+    let config = RustlsConfig::from_pem(cert_pem.into_bytes(), keys_pem.into_bytes()).await?;
 
     println!("Server running at https://{}", addr);
     println!("If you are using a firewall, you may need to expose the 8000 port.");
     println!("Press Ctrl+C to stop...");
-
-    let (cert_pem, key_pem) = utilities::generate_cert(local_ip)?;
-    let config = RustlsConfig::from_pem(cert_pem.into_bytes(), key_pem.into_bytes()).await?;
 
     axum_server::bind_rustls(addr, config)
         .serve(app.into_make_service_with_connect_info::<SocketAddr>())

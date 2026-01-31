@@ -1125,7 +1125,7 @@ checksum = "f89776e4d69bb58bc6993e99ffa1d11f228b839984854c7daeb5d37f87cbe950"
 
 [[package]]
 name = "portal"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "axum",
  "axum-extra",
