@@ -7,23 +7,22 @@ use axum::{
     routing::{get, post},
 };
 use axum_server::tls_rustls::RustlsConfig;
-use clap::Parser;
 use local_ip_address::local_ip;
-use models::{AppState, Args};
+use models::AppState;
 use std::{error::Error, net::SocketAddr, sync::Arc};
 use tower_governor::{GovernorLayer, governor::GovernorConfigBuilder};
 use uuid::Uuid;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
-    let args = Args::parse();
-    let paths = utilities::get_canonical_paths(args.paths)?;
+    let input = utilities::collect_input()?;
+    let paths = utilities::get_canonical_paths(input.paths)?;
     let metadata = utilities::generate_metadata(&paths)?;
     let auth_token = Uuid::new_v4().to_string();
 
     let shared_state = Arc::new(AppState {
         metadata,
-        password: args.password,
+        password: input.password,
         auth_token,
     });
 

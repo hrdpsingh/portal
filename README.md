@@ -22,20 +22,25 @@ You can download the latest pre-compiled binaries from the release page:
 
 ## Usage
 
-Run the executable via your terminal or command prompt by specifying a password and the paths to the files(NOT folders) you wish to share.
+Run the executable via your terminal or command prompt:
+```console
+path/to/executable
+```
 
-```bash
-# General Syntax
-path/to/executable --password <your-password> --paths <file/path/1> <file/path/2>
-
-# Example (Linux/macOS)
-./portal --password secret123 --paths ./document.pdf ./images/vacation.zip
-
-# Example (Windows)
-.\portal.exe --password secret123 --paths C:\Users\Docs\Report.pdf
+ Then specify the password and the paths to the files (NOT folders) you wish to share:
+```console
+Enter password: <your-password>
+Enter the number of files to be shared: <file-count>
+Enter file path 1/<file-count>: /file/path/1
+Enter file path 2/<file-count>: /file/path/2
 ```
 
 Once running, the terminal will display a link (e.g., `https://192.168.1.10:8000`). Open this link on any device connected to the same Wi-Fi/network to access your files.
+```console
+Server running at https://192.168.1.10:8000
+If you are using a firewall, you may need to expose the 8000 port.
+Press Ctrl+C to stop...
+```
 
 ---
 

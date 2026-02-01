@@ -1,11 +1,42 @@
-use crate::models::FileInfo;
+use crate::models::{FileInfo, InputData};
 use rcgen::{CertificateParams, DistinguishedName, KeyPair};
 use std::error::Error;
 use std::fs;
-use std::io;
+use std::io::{self, Write};
 use std::net::IpAddr;
 use std::path::PathBuf;
 use uuid::Uuid;
+
+pub fn collect_input() -> Result<InputData, Box<dyn Error>> {
+    let mut password = String::new();
+    let mut file_count = String::new();
+
+    print!("Enter password: ");
+    io::stdout().flush()?;
+    io::stdin().read_line(&mut password)?;
+
+    print!("Enter the number of files to be shared: ");
+    io::stdout().flush()?;
+    io::stdin().read_line(&mut file_count)?;
+    let count: usize = file_count
+        .trim()
+        .parse()
+        .expect("Please enter a valid number");
+
+    let mut paths = Vec::new();
+    for i in 0..count {
+        let mut path_input = String::new();
+        print!("Enter file path {}/{}: ", i + 1, count);
+        io::stdout().flush()?;
+        io::stdin().read_line(&mut path_input)?;
+        paths.push(PathBuf::from(path_input.trim()));
+    }
+
+    Ok(InputData {
+        password: password.trim().to_string(),
+        paths,
+    })
+}
 
 pub fn get_canonical_paths(paths: Vec<PathBuf>) -> io::Result<Vec<PathBuf>> {
     paths.into_iter().map(|p| fs::canonicalize(p)).collect()

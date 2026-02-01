@@ -1,14 +1,9 @@
-use clap::Parser;
 use serde::Deserialize;
 use std::path::PathBuf;
 use uuid::Uuid;
 
-#[derive(Parser)]
-pub struct Args {
-    #[arg(long, required = true)]
+pub struct InputData {
     pub password: String,
-
-    #[arg(long, required = true, num_args = 1..)]
     pub paths: Vec<PathBuf>,
 }
 
